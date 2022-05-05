@@ -4,7 +4,7 @@ const port = 3000
 const cors = require('cors');
 var jwt = require('jsonwebtoken');
 const { createaccount, connect,logout } = require('./Modules/Auth');
-const {Updateuser, updatepassword,finById,finduser}=require('./Modules/user');
+const {Updateuser, updatepassword,finById,finduser, updatecategories}=require('./Modules/user');
 app.use(cors());
 
 app.use(function(req,res,next){

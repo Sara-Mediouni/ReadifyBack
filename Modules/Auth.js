@@ -122,7 +122,7 @@ exports.connect = function(req,res){
             console.log("DATABASE CONNECTED");
             var database = db.db('Readify');
 
-            database.collection('users').findOne({ email:jsonData.email, password : sha1(jsonData.password) }).then((r)=>{
+            database.collection('users').findOne({ email:jsonData.email, password : jsonData.password}).then((r)=>{
 
                 if (r !== null) {
                     // generate a new token

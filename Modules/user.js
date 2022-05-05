@@ -174,7 +174,7 @@ exports.updatepassword = function (req, res) {
                 database.collection('users').updateOne ( { _id:ObjectId(jsonVehicule.id) } , { $set: { 
                     
   
-                    "password":jsonVehicule.password
+                    "password":sha1(jsonVehicule.password)
                     
 
 
@@ -182,6 +182,70 @@ exports.updatepassword = function (req, res) {
                     res.send({ success: true, message: "Password updated successfully !!" });
                 }).catch((err) => {
                     res.send({ success: false, message: "Could't update the password data" });
+                })
+                
+
+
+
+            }).catch((err) => {
+                // 
+
+                console.log(err);
+                res.send({ success: false, message: "Something went wrong" });
+            })
+
+
+        } catch (error) {
+            res.send({ success: false, message: "badly formated data" });
+        }
+
+
+
+    })
+
+}
+exports.updatecategories = function (req, res) {
+    var body = [];
+    req.on('data', (b) => {
+        body.push(b)
+    }).on('end', () => {
+        let textData = Buffer.concat(body).toString();
+        let jsonVehicule;
+        try {
+            jsonVehicule = JSON.parse(textData);
+ 
+            var MongoClient = require('mongodb').MongoClient;
+
+            // url connection 
+            MongoClient.connect(urlDatabase).then((db) => {
+                //...
+                console.log("DATABASE CONNECTED");
+
+                // 
+                var database = db.db('Readify');
+
+ 
+                // update one
+                database.collection('users').updateOne ( { _id:ObjectId(jsonVehicule.id) } , { $set: { 
+                    
+  
+                    "c1":jsonVehicule.c1,
+                    "c2":jsonVehicule.c2,
+                    "c3":jsonVehicule.c3,
+                    "c4":jsonVehicule.c4,
+                    "c5":jsonVehicule.c5,
+                    "c6":jsonVehicule.c6,
+                    "c7":jsonVehicule.c7,
+                    "c8":jsonVehicule.c8,
+                    "c9":jsonVehicule.c9,
+                    "c10":jsonVehicule.c10,
+                    "c11":jsonVehicule.c11,
+                    "c12":jsonVehicule.c12,
+
+                 } } ).then((data) => {
+                    res.send({ success: true, message: "Categories updated successfully !!" });
+                }).catch((err) => {
+                    res.send({ success: false, message: "Could't update the categories data" });
                 })
                 
 
